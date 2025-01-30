@@ -1,0 +1,18 @@
+services:
+  cassandra:
+    image: cassandra:5.0.2-jammy
+    hostname: cassandra
+    restart: unless-stopped
+    ports:
+      - 7000:7000
+      - 9042:9042
+    volumes:
+      - cassandra_data_dir:/var/lib/cassandra:z
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "1"
+
+volumes:
+  cassandra_data_dir:
