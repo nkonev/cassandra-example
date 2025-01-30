@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: nkonev
+      changes:
+        - sqlFile:
+            path: db/migration/V1__init.sql

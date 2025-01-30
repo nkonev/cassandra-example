@@ -1,13 +1,16 @@
 services:
   cassandra:
-    image: cassandra:5.0.2-jammy
+    image: bitnami/cassandra:5.0.2-debian-12-r6
     hostname: cassandra
     restart: unless-stopped
     ports:
       - 7000:7000
       - 9042:9042
     volumes:
-      - cassandra_data_dir:/var/lib/cassandra:z
+      - cassandra_data_dir:/bitnami/cassandra:z
+      - ./docker/cassandra/init:/docker-entrypoint-initdb.d:z
+    environment:
+      CASSANDRA_DELAY_START_TIME: 0
     logging:
       driver: "json-file"
       options:

@@ -1,0 +1,8 @@
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog.yml
+  datasource:
+    url: jdbc:cassandra://localhost:9042/store?compliancemode=Liquibase&localdatacenter=datacenter1&User=cassandra&Password=cassandra
+    driverClassName: com.ing.data.cassandra.jdbc.CassandraDriver
+    # TODO com.ing.data.cassandra.jdbc.PooledCassandraDataSource
+    type: com.ing.data.cassandra.jdbc.CassandraDataSource
