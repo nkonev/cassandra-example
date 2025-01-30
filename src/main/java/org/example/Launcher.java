@@ -21,6 +21,8 @@ public class Launcher implements CommandLineRunner {
         SpringApplication.run(Launcher.class, args);
     }
 
+    // TODO add a configuration, which requires to run Liquibase before repositories
+
     @Override
     public void run(String... args) throws Exception {
         try (var connection = dataSource.getConnection()) {
