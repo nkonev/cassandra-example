@@ -12,14 +12,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.repository.config.CassandraRepositoriesRegistrar;
 import org.springframework.data.domain.Sort;
 
-import javax.sql.DataSource;
 import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class Launcher implements CommandLineRunner {
-
-    @Autowired
-    private DataSource dataSource;
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
@@ -41,20 +37,6 @@ public class Launcher implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        logger.info("Using SQL connection");
-        try (var connection = dataSource.getConnection()) {
-            try (var statement = connection.createStatement()) {
-                try (var resultSet = statement.executeQuery("SELECT * FROM shopping_cart;")) {
-                    while (resultSet.next()) {
-                        var uid = resultSet.getString("userid");
-                        var ic = resultSet.getInt("item_count");
-                        var ts = resultSet.getTimestamp("last_update_timestamp");
-                        logger.info("Row: {}, {}, {}", uid, ic, ts);
-                    }
-                }
-            }
-        }
-
         logger.info("Using repository");
         shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 4), LocalDateTime.now()));
         shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 6), LocalDateTime.now()));
