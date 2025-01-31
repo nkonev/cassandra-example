@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.AbstractDependsOnBeanFactoryPostPr
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.repository.config.CassandraRepositoriesRegistrar;
+import org.springframework.data.domain.Sort;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
@@ -55,10 +56,11 @@ public class Launcher implements CommandLineRunner {
         }
 
         logger.info("Using repository");
-        int ic = (int)(Math.random() * 10);
-        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new"+ic, ic), LocalDateTime.now()));
+        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 4), LocalDateTime.now()));
+        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 6), LocalDateTime.now()));
+        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 7), LocalDateTime.now()));
 
-        shoppingCartRepository.findAll().forEach(shoppingCart -> {
+        shoppingCartRepository.findByKeyUserid("new1", Sort.by(Sort.Order.desc("key.itemCount"))).forEach(shoppingCart -> {
             logger.info("Row: {}, {}, {}", shoppingCart.key().userid(), shoppingCart.key().itemCount(), shoppingCart.lastUpdateTimestamp());
         });
     }
