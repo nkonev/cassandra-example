@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.repository.config.CassandraRepositoriesRegistrar;
 
 import javax.sql.DataSource;
+import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class Launcher implements CommandLineRunner {
@@ -54,8 +55,11 @@ public class Launcher implements CommandLineRunner {
         }
 
         logger.info("Using repository");
+        int ic = (int)(Math.random() * 10);
+        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new"+ic, ic), LocalDateTime.now()));
+
         shoppingCartRepository.findAll().forEach(shoppingCart -> {
-            logger.info("Row: {}, {}, {}", shoppingCart.userid(), shoppingCart.itemCount(), shoppingCart.lastUpdateTimestamp());
+            logger.info("Row: {}, {}, {}", shoppingCart.key().userid(), shoppingCart.key().itemCount(), shoppingCart.lastUpdateTimestamp());
         });
     }
 }
