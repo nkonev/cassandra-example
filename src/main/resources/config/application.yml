@@ -5,3 +5,10 @@ spring:
     url: jdbc:cassandra://localhost:9042/store?compliancemode=Liquibase&localdatacenter=datacenter1&User=cassandra&Password=cassandra
     driverClassName: com.ing.data.cassandra.jdbc.CassandraDriver
     type: com.ing.data.cassandra.jdbc.CassandraDataSource
+  cassandra:
+    keyspaceName: store
+    contactPoints:
+      - "localhost:9042"
+    local-datacenter: datacenter1
+    username: cassandra
+    password: cassandra
