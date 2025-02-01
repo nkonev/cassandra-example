@@ -1,6 +1,8 @@
 package org.example;
 
 import liquibase.integration.spring.SpringLiquibase;
+import org.example.entity.cassandra.Message;
+import org.example.repository.cassandra.MessageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 public class Launcher implements CommandLineRunner {
 
     @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
+    private MessageRepository messageRepository;
 
     final static Logger logger = LoggerFactory.getLogger(Launcher.class);
 
@@ -38,12 +40,11 @@ public class Launcher implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         logger.info("Using repository");
-        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 4), LocalDateTime.now()));
-        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 6), LocalDateTime.now()));
-        shoppingCartRepository.save(new ShoppingCart(new ShoppingCart.ShoppingCartKey("new1", 7), LocalDateTime.now()));
 
-        shoppingCartRepository.findByKeyUserid("new1", Sort.by(Sort.Order.desc("key.itemCount"))).forEach(shoppingCart -> {
-            logger.info("Row: {}, {}, {}", shoppingCart.key().userid(), shoppingCart.key().itemCount(), shoppingCart.lastUpdateTimestamp());
-        });
+        for (int i = 0; i < 1000; ++i) {
+            messageRepository.save(new Message(new Message.MessageKey(1, i), LocalDateTime.now(), "hello"+i, 1));
+        }
+
+        messageRepository.findByKeyChatId(1, Sort.by(Sort.Order.desc("key.id"))).forEach(message -> logger.info("Row: {}", message));
     }
 }
