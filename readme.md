@@ -11,6 +11,17 @@
 * https://cassandra.apache.org/doc/latest/cassandra/developing/data-modeling/data-modeling_logical.html
 * https://stackoverflow.com/questions/70234153/spring-data-cassandra-not-able-to-perform-paginaton-after-passing-the-cassandra/70235061#70235061
 
+## Start
+```bash
+docker compose up -d
+docker logs -f cassandra-example-cassandra-1
+```
+Wait until you see in Cassandra logs (`Startup complete`, `Creating replication`, ...), it takes about of 1 minute. 
+
+Then start `Launcher` from your IDE.
+
+Then you can
+
 ## Perform pagination
 ```bash
 curl -Ss 'http://localhost:8080/api/message/chat/1' | jq
