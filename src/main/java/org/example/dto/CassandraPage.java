@@ -24,7 +24,7 @@ public record CassandraPage<R> (
     private static String getPagingState(final Slice<?> slice) {
         if (slice.hasNext()) {
             var bb = ((CassandraPageRequest)slice.nextPageable()).getPagingState();
-            return bb != null ? PageUtils.to(bb) : null;
+            return bb != null ? PageUtils.toString(bb) : null;
         } else {
             return null;
         }

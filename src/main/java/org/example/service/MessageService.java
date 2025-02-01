@@ -42,7 +42,7 @@ public class MessageService {
 
     private CassandraPageRequest createCassandraPageRequest(final int limit, @Nullable final String pagingState) {
         final var pageRequest = PageRequest.of(0, limit);
-        final var pageState = pagingState != null ? PageUtils.from(pagingState) : null ;
+        final var pageState = pagingState != null ? PageUtils.fromString(pagingState) : null ;
         return CassandraPageRequest.of(pageRequest, pageState);
     }
 }
