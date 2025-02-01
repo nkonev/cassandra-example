@@ -30,8 +30,7 @@ public class MessageService {
 
     public <T> CassandraPage<T> getPageOfMessages(long chatId, final CassandraPageRequest cassandraPageRequest, Function<Message, T> mapper) {
         final var userSlice = messageRepository.findByKeyChatId(chatId, cassandraPageRequest);
-        final var list = userSlice.getContent().stream().map(mapper).toList();
-        return new CassandraPage<>(list, userSlice);
+        return new CassandraPage<>(userSlice, mapper);
     }
 
     private CassandraPageRequest createCassandraPageRequest(final int limit, @Nullable final String pagingState) {

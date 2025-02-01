@@ -1,36 +1,30 @@
 package org.example.dto;
 
-import com.datastax.oss.driver.api.core.cql.PagingState;
 import org.example.utils.PageUtils;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.nio.ByteBuffer;
+import java.util.function.Function;
 
-public record CassandraPage<T> (
-        List<T> content,
-        Integer count,
+public record CassandraPage<R> (
+        List<R> content,
+        int count,
         String pagingState,
         boolean hasNext
 ) {
 
-    public CassandraPage(List<T> content, Slice<?> slice) {
-        this(content, content.size(), getPagingState(slice), slice.hasNext());
+    public <T> CassandraPage(Slice<T> slice, Function<T, R> mapper) {
+        this(slice.getContent().stream().map(mapper).toList(), slice.getContent().size(), getPagingState(slice), slice.hasNext());
     }
 
     @Nullable
     private static String getPagingState(final Slice<?> slice) {
         if (slice.hasNext()) {
             var bb = ((CassandraPageRequest)slice.nextPageable()).getPagingState();
-            if (bb == null) {
-                return null;
-            } else {
-                return PageUtils.to(bb);
-            }
+            return bb != null ? PageUtils.to(bb) : null;
         } else {
             return null;
         }
