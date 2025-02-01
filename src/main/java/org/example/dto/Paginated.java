@@ -17,7 +17,7 @@ public record Paginated (
         return Optional.ofNullable(pagingState);
     }
 
-    public Integer getLimit() {
+    public int getLimit() {
         return limit != null ? limit : DEFAULT_LIMIT;
     }
 }
