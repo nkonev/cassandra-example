@@ -24,7 +24,7 @@ public abstract class PageUtils {
                     + Character.digit(pageState.charAt(i+1), 16)));
         }
 
-        bytes.position(0); // https://stackoverflow.com/questions/70234153/spring-data-cassandra-not-able-to-perform-paginaton-after-passing-the-cassandra/70235061#70235061
+        bytes.position(0);
         return bytes;
     }
 }

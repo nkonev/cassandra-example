@@ -22,7 +22,7 @@ public class MessageController {
     private MessageService messageService;
 
     @GetMapping("/chat/{chatId}")
-    public CassandraPage<MessageDto> getPageOfUsers(final @Valid Paginated paginated, @PathVariable("chatId") long chatId) {
+    public CassandraPage<MessageDto> getPageOfMessages(final @Valid Paginated paginated, @PathVariable("chatId") long chatId) {
         return messageService.getPageOfMessages(chatId, paginated, Message::toDto);
     }
 
