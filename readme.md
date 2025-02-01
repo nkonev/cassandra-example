@@ -33,6 +33,11 @@ curl -Ss 'http://localhost:8080/api/message/chat/1' | jq
 curl -Ss 'http://localhost:8080/api/message/chat/1?limit=10&pagingState=000A00080000000000000009F07FFFFFF5F07FFFFFF5' | jq
 ```
 
+## Try validation
+```bash
+curl -Ss 'http://localhost:8080/api/message/chat/1?limit=10000' | jq
+```
+
 ## See keyspaces
 ```bash
 docker exec -it cassandra-example-cassandra-1 bash
