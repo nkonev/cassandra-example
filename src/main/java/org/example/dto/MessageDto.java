@@ -4,6 +4,6 @@ import java.time.LocalDateTime;
 public record MessageDto(
         long id,
         LocalDateTime createDateTime,
-        String content,
+        String body,
         long ownerId
 ) { }

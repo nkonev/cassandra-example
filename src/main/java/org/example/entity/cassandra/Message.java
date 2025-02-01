@@ -13,8 +13,8 @@ public record Message(
         MessageKey key,
         @Column("create_date_time")
         LocalDateTime createDateTime,
-        @Column("content")
-        String content,
+        @Column("body")
+        String body,
         @Column("owner_id")
         long ownerId
 ) {
@@ -30,7 +30,7 @@ public record Message(
                 return new MessageDto(
                         message.key().id(),
                         message.createDateTime(),
-                        message.content(),
+                        message.body(),
                         message.ownerId()
                 );
         }
