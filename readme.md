@@ -22,3 +22,7 @@ INSERT INTO store.shopping_cart
 VALUES ('1234', 5, toTimeStamp(now()));
 SELECT * FROM store.shopping_cart;
 ```
+
+* https://cassandra.apache.org/doc/latest/cassandra/architecture/dynamo.html
+* https://stackoverflow.com/questions/60466271/cassandra-replication-in-networktopologystrategy/60476099#60476099
+* https://cassandra.apache.org/doc/latest/cassandra/developing/data-modeling/data-modeling_logical.html
