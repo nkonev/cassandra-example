@@ -5,3 +5,15 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: db/migration/1_init.sql
+  - changeSet:
+      id: 2
+      author: nkonev
+      changes:
+        - sqlFile:
+            path: db/migration/2_pinned.sql
+  - changeSet:
+      id: 3
+      author: nkonev
+      changes:
+        - sqlFile:
+            path: db/migration/3_pinned_idx.sql

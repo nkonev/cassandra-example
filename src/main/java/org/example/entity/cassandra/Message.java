@@ -16,7 +16,9 @@ public record Message(
         @Column("body")
         String body,
         @Column("owner_id")
-        long ownerId
+        long ownerId,
+        @Column("pinned")
+        boolean pinned
 ) {
         @PrimaryKeyClass
         public record MessageKey(

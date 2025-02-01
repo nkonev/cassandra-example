@@ -45,3 +45,9 @@ nodetool status
 cqlsh -u cassandra -p cassandra
 DESC KEYSPACES;
 ```
+
+## Query pinned messages
+```
+docker exec -it cassandra-example-cassandra-1 cqlsh -u cassandra -p cassandra
+select * from store.message where chat_id = 1 and pinned = true;
+```

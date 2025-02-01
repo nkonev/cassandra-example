@@ -36,7 +36,7 @@ public class MessageService {
 
     public void generate() {
         for (int i = 0; i < 1000; ++i) {
-            messageRepository.save(new Message(new Message.MessageKey(1, i), LocalDateTime.now(), "hello"+i, 1));
+            messageRepository.save(new Message(new Message.MessageKey(1, i), LocalDateTime.now(), "hello"+i, 1, i % 2 == 0));
         }
     }
 
