@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.function.Function;
 
 @Service
@@ -31,6 +32,12 @@ public class MessageService {
     public <T> CassandraPage<T> getPageOfMessages(long chatId, final CassandraPageRequest cassandraPageRequest, Function<Message, T> mapper) {
         final var messagesSlice = messageRepository.findByKeyChatId(chatId, cassandraPageRequest);
         return new CassandraPage<>(messagesSlice, mapper);
+    }
+
+    public void generate() {
+        for (int i = 0; i < 1000; ++i) {
+            messageRepository.save(new Message(new Message.MessageKey(1, i), LocalDateTime.now(), "hello"+i, 1));
+        }
     }
 
     private CassandraPageRequest createCassandraPageRequest(final int limit, @Nullable final String pagingState) {

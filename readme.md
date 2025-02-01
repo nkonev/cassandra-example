@@ -22,6 +22,11 @@ Then start `Launcher` from your IDE.
 
 Then you can
 
+## Generate messages
+```bash
+curl -Ss -X PUT 'http://localhost:8080/api/message/generate' | jq
+```
+
 ## Perform pagination
 ```bash
 curl -Ss 'http://localhost:8080/api/message/chat/1' | jq

@@ -8,10 +8,9 @@ import org.example.entity.cassandra.Message;
 import org.example.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/message")
@@ -20,6 +19,12 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
+
+    @PutMapping("/generate")
+    public Map<String, String> generate() {
+        messageService.generate();
+        return Map.of("status", "success");
+    }
 
     @GetMapping("/chat/{chatId}")
     public CassandraPage<MessageDto> getPageOfMessages(final @Valid Paginated paginated, @PathVariable("chatId") long chatId) {
