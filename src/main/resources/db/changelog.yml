@@ -4,4 +4,4 @@ databaseChangeLog:
       author: nkonev
       changes:
         - sqlFile:
-            path: db/migration/V1__init.sql
+            path: db/migration/1_init.sql
