@@ -5,5 +5,6 @@ public record MessageDto(
         long id,
         LocalDateTime createDateTime,
         String body,
-        long ownerId
+        long ownerId,
+        boolean pinned
 ) { }

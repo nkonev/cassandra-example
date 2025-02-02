@@ -33,7 +33,8 @@ public record Message(
                         message.key().id(),
                         message.createDateTime(),
                         message.body(),
-                        message.ownerId()
+                        message.ownerId(),
+                        message.pinned()
                 );
         }
 }
