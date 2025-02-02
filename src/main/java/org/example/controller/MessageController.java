@@ -21,8 +21,8 @@ public class MessageController {
     private MessageService messageService;
 
     @PutMapping("/generate")
-    public Map<String, String> generate(@RequestParam("count") int count, @RequestParam("chatId") long chatId, @RequestParam("pinned") boolean pinned) {
-        messageService.generate(count, chatId, pinned);
+    public Map<String, String> generate(@RequestParam(value = "chatCount", required = false, defaultValue = "1") int chatCount, @RequestParam("messageCount") int messageCount, @RequestParam("pinned") boolean pinned) {
+        messageService.generate(chatCount, messageCount, pinned);
         return Map.of("status", "success");
     }
 

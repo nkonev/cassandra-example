@@ -6,6 +6,8 @@ import org.example.dto.Paginated;
 import org.example.entity.cassandra.Message;
 import org.example.repository.cassandra.MessageRepository;
 import org.example.utils.PageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
@@ -26,6 +28,8 @@ public class MessageService {
     @Autowired
     private CassandraTemplate cassandraTemplate;
 
+    private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
+
     public <T> CassandraPage<T> getPageOfMessages(long chatId, final Paginated paginated, Function<Message, T> mapper) {
         return getPageOfMessages(chatId, paginated.getLimit(), paginated.getPagingState().orElse(null), mapper);
     }
@@ -40,19 +44,24 @@ public class MessageService {
         return new CassandraPage<>(messagesSlice, mapper);
     }
 
-    public void generate(int count, long chatId, boolean pinned) {
-        var messages = new ArrayList<Message>();
-        for (int i = 0; i < count; ++i) {
-            messages.add(new Message(new Message.MessageKey(chatId, i), LocalDateTime.now(), "hello"+i, 1, pinned));
-            if (i % 1000 == 0) {
+    public void generate(int chatCount, int messageCount, boolean pinned) {
+        for (int c = 1; c <= chatCount; c++) {
+            logger.info("Chat {}", c);
+            var messages = new ArrayList<Message>();
+            for (int i = 0; i < messageCount; ++i) {
+                messages.add(new Message(new Message.MessageKey(c, i), LocalDateTime.now(), "hello"+i, 1, pinned));
+                if (i % 1000 == 0) {
+                    cassandraTemplate.batchOps(BatchType.LOGGED).insert(messages).execute();
+                    messages.clear();
+                    logger.info("Chat {}, message {}", c, i);
+                }
+            }
+
+            if (!messages.isEmpty()) {
                 cassandraTemplate.batchOps(BatchType.LOGGED).insert(messages).execute();
                 messages.clear();
+                logger.info("Chat {}, last batch message", c);
             }
-        }
-
-        if (!messages.isEmpty()) {
-            cassandraTemplate.batchOps(BatchType.LOGGED).insert(messages).execute();
-            messages.clear();
         }
     }
 
