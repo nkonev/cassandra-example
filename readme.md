@@ -26,6 +26,7 @@ Then you can
 ```bash
 curl -Ss -X PUT 'http://localhost:8080/api/message/generate?chatCount=10&messageCount=1000000&pinned=false' | jq
 curl -Ss -X PUT 'http://localhost:8080/api/message/generate?messageCount=10&pinned=true' | jq
+curl -Ss -X PUT 'http://localhost:8080/api/message/generate2?chatId=11&messageCount=10000&pinned=false' | jq
 ```
 
 ## Perform pagination

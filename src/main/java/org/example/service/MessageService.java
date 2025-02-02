@@ -46,22 +46,26 @@ public class MessageService {
 
     public void generate(int chatCount, int messageCount, boolean pinned) {
         for (int c = 1; c <= chatCount; c++) {
-            logger.info("Chat {}", c);
-            var messages = new ArrayList<Message>();
-            for (int i = 0; i < messageCount; ++i) {
-                messages.add(new Message(new Message.MessageKey(c, i), LocalDateTime.now(), "hello"+i, 1, pinned));
-                if (i % 1000 == 0) {
-                    cassandraTemplate.batchOps(BatchType.LOGGED).insert(messages).execute();
-                    messages.clear();
-                    logger.info("Chat {}, message {}", c, i);
-                }
-            }
+            generate2(c, messageCount, pinned);
+        }
+    }
 
-            if (!messages.isEmpty()) {
+    public void generate2(long chatId, int messageCount, boolean pinned) {
+        logger.info("Chat {}", chatId);
+        var messages = new ArrayList<Message>();
+        for (int i = 0; i < messageCount; ++i) {
+            messages.add(new Message(new Message.MessageKey(chatId, i), LocalDateTime.now(), "hello"+i, 1, pinned));
+            if (i % 1000 == 0) {
                 cassandraTemplate.batchOps(BatchType.LOGGED).insert(messages).execute();
                 messages.clear();
-                logger.info("Chat {}, last batch message", c);
+                logger.info("Chat {}, message {}", chatId, i);
             }
+        }
+
+        if (!messages.isEmpty()) {
+            cassandraTemplate.batchOps(BatchType.LOGGED).insert(messages).execute();
+            messages.clear();
+            logger.info("Chat {}, last batch message", chatId);
         }
     }
 
@@ -70,4 +74,5 @@ public class MessageService {
         final var pageState = pagingState != null ? PageUtils.fromString(pagingState) : null ;
         return CassandraPageRequest.of(pageRequest, pageState);
     }
+
 }

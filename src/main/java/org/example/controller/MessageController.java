@@ -26,6 +26,12 @@ public class MessageController {
         return Map.of("status", "success");
     }
 
+    @PutMapping("/generate2")
+    public Map<String, String> generate2(@RequestParam(value = "chatId") long chatId, @RequestParam("messageCount") int messageCount, @RequestParam("pinned") boolean pinned) {
+        messageService.generate2(chatId, messageCount, pinned);
+        return Map.of("status", "success");
+    }
+
     @GetMapping("/chat/{chatId}")
     public CassandraPage<MessageDto> getPageOfMessages(final @Valid Paginated paginated, @PathVariable("chatId") long chatId) {
         return messageService.getPageOfMessages(chatId, paginated, Message::toDto);
