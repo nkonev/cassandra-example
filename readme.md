@@ -52,3 +52,9 @@ DESC KEYSPACES;
 docker exec -it cassandra-example-cassandra-1 cqlsh -u cassandra -p cassandra
 select * from store.message where chat_id = 1 and pinned = true;
 ```
+
+## Search (after a bout of 1 minute, when the index will be built, wait until Cassandra stop write `Flushed index segment` to log)
+```
+select * from store.message where chat_id = 1 and body like '%hello8888%' limit 10;
+select * from store.message where chat_id = 1 and body like '%hello%' limit 10;
+```

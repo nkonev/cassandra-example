@@ -17,3 +17,9 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: db/migration/3_pinned_idx.sql
+  - changeSet:
+      id: 4
+      author: nkonev
+      changes:
+        - sqlFile:
+            path: db/migration/4_body_idx.sql

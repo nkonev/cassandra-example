@@ -11,6 +11,8 @@ services:
       - ./docker/cassandra/init:/docker-entrypoint-initdb.d:z
     environment:
       CASSANDRA_DELAY_START_TIME: 0
+      CASSANDRA_CFG_YAML_SASI_INDEXES_ENABLED: true
+      CASSANDRA_CFG_YAML_READ_REQUEST_TIMEOUT: 10s
     logging:
       driver: "json-file"
       options:
