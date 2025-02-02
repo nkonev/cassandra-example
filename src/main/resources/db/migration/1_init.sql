@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS message (
     body text,
     owner_id bigint,
     PRIMARY KEY(chat_id, id)
-) WITH CLUSTERING ORDER BY (id ASC);
+) WITH CLUSTERING ORDER BY (id DESC);

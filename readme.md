@@ -32,7 +32,7 @@ curl -Ss -X PUT 'http://localhost:8080/api/message/generate?count=10&chatId=2&pi
 ## Perform pagination
 ```bash
 curl -Ss 'http://localhost:8080/api/message/chat/1' | jq
-curl -Ss 'http://localhost:8080/api/message/chat/1?limit=10&pagingState=000A00080000000000000009F07FFFFFF5F07FFFFFF5' | jq
+curl -Ss 'http://localhost:8080/api/message/chat/1?limit=10&pagingState=000A000800000000000F4236F07FFFFFF5F07FFFFFF5' | jq
 ```
 
 ## Try validation
