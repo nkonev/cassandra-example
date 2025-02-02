@@ -12,3 +12,7 @@ spring:
     local-datacenter: datacenter1
     username: cassandra
     password: cassandra
+  data:
+    cassandra:
+      repositories:
+        type: imperative

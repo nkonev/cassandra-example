@@ -24,7 +24,9 @@ Then you can
 
 ## Generate messages
 ```bash
-curl -Ss -X PUT 'http://localhost:8080/api/message/generate' | jq
+curl -Ss -X PUT 'http://localhost:8080/api/message/generate?count=1000000&chatId=1&pinned=false' | jq
+curl -Ss -X PUT 'http://localhost:8080/api/message/generate?count=1000000&chatId=2&pinned=false' | jq
+curl -Ss -X PUT 'http://localhost:8080/api/message/generate?count=10&chatId=2&pinned=true' | jq
 ```
 
 ## Perform pagination
@@ -49,5 +51,5 @@ DESC KEYSPACES;
 ## Query pinned messages
 ```
 docker exec -it cassandra-example-cassandra-1 cqlsh -u cassandra -p cassandra
-select * from store.message where chat_id = 1 and pinned = true;
+select * from store.message where chat_id = 2 and pinned = true;
 ```
